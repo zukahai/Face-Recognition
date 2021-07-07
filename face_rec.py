@@ -133,27 +133,27 @@ def main():
                             text_x = bb[i][0]
                             text_y = bb[i][3] + 20
 
-                            # Neu ty le nhan dang > 0.5 thi hien thi ten
+                            # Neu ty le nhan dang > 0.7 thi hien thi ten
                             if best_class_probabilities > 0.7:
                                 name = class_names[best_class_indices[0]]
                                 converInt(name)
-                                if B[A.index(name)] > 2:
-                                    if kt == False:
-                                        conf = ctypes.windll.user32.MessageBoxW(0, "Your Name: " + name, "Confirm", 3)
+                                if B[A.index(name)] > 7:
+                                    if kt:
+                                        indexData = -1
+                                        for i in range(0, len(data)):
+                                            if name == data[i][0]:
+                                                indexData = i
+                                        conf = ctypes.windll.user32.MessageBoxW(0, "Ma SV: " + data[indexData][0]
+                                        + "\n" + "Ho Ten: " + data[indexData][1]
+                                        + "\n" + "Lop: " + data[indexData][2], "Confirm", 3)
                                         if conf == 6:
                                             kt = False
-                                            for i in range(0, len(data)):
-                                                if name == data[i][0]:
-                                                    print('Yes')
-                                                    data[i][3] = '1'
-                                                    writeData(data)
-                                                    break
-                                                else:
-                                                    print("No_" + data[i][0] + "_" + name)
+                                            data[indexData][3] = '1'
+                                            writeData(data)
                                         else:
                                             B[A.index(name)] = -9999999
                             else:
-                                # Con neu <=0.5 thi hien thi Unknow
+                                # Con neu <=0.7 thi hien thi Unknow
                                 name = "Unknown"
                                 
                             # Viet text len tren frame    
