@@ -153,7 +153,6 @@ def main():
                                         else:
                                             B[A.index(name)] = -9999999
                             else:
-                                # Con neu <=0.7 thi hien thi Unknow
                                 name = "Unknown"
                                 
                             # Viet text len tren frame    
