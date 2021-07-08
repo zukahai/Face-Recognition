@@ -29,7 +29,7 @@ def converInt(s):
 def writeData(data):
     f = open('C:\\xampp\\htdocs\\HaiZuka\\data.txt','w')
     for i in range(len(data)):
-        data[i] = " @#$ ".join(data[i])
+        data[i] = " @#@ ".join(data[i])
     data = "\n".join(data)
     f.write(data)
     f.close()
@@ -40,7 +40,7 @@ def main():
     str = f.read()
     data = str.split("\n")
     for i in range(len(data)):
-        data[i] = (data[i]).split(" @#$ ")
+        data[i] = (data[i]).split(" @#@ ")
     f.close()
     parser = argparse.ArgumentParser()
     parser.add_argument('--path', help='Path of the video you want to test on.', default=0)
@@ -88,7 +88,7 @@ def main():
             # Lay hinh anh tu file video
             cap = cv2.VideoCapture(VIDEO_PATH)
 
-            while (cap.isOpened()):
+            while (True):
                 # Doc tung frame
                 ret, frame = cap.read()
 
@@ -136,28 +136,29 @@ def main():
                             # Neu ty le nhan dang > 0.7 thi hien thi ten
                             if best_class_probabilities > 0.7:
                                 name = class_names[best_class_indices[0]]
-                                converInt(name)
-                                if B[A.index(name)] > 7:
-                                    if kt:
-                                        indexData = -1
-                                        for i in range(0, len(data)):
-                                            if name == data[i][0]:
-                                                indexData = i
-                                        conf = ctypes.windll.user32.MessageBoxW(0, "Ma SV: " + data[indexData][0]
-                                        + "\n" + "Ho Ten: " + data[indexData][1]
-                                        + "\n" + "Lop: " + data[indexData][2], "Confirm", 3)
-                                        if conf == 6:
-                                            kt = False
-                                            data[indexData][3] = '1'
-                                            writeData(data)
-                                        else:
-                                            B[A.index(name)] = -9999999
+                                cv2.putText(frame, name, (text_x, text_y), cv2.FONT_HERSHEY_COMPLEX_SMALL,
+                                    1, (255, 255, 255), thickness=1, lineType=2)
+                                # converInt(name)
+                                # if B[A.index(name)] > 3:
+                                indexData = -1
+                                for i in range(0, len(data)):
+                                    if name == data[i][0]:
+                                        indexData = i
+                                # conf = ctypes.windll.user32.MessageBoxW(0, "Ma SV: " + data[indexData][0]
+                                # + "\n" + "Ho Ten: " + data[indexData][1]
+                                # + "\n" + "Lop: " + data[indexData][2], "Confirm", 3)
+                                # if conf == 6:
+                                if indexData != -1:
+                                    data[indexData][3] = '1'
+                                    writeData(data)
+                                    print("Done")
+
+                                        
                             else:
                                 name = "Unknown"
                                 
                             # Viet text len tren frame    
-                            cv2.putText(frame, name, (text_x, text_y), cv2.FONT_HERSHEY_COMPLEX_SMALL,
-                                        1, (255, 255, 255), thickness=1, lineType=2)
+                            
                             cv2.putText(frame, str(round(best_class_probabilities[0], 3)), (text_x, text_y + 17),
                                         cv2.FONT_HERSHEY_COMPLEX_SMALL,
                                         1, (255, 255, 255), thickness=1, lineType=2)
