@@ -34,14 +34,16 @@ def writeData(data):
     f.write(data)
     f.close()
 
-def main():
-    kt = True
+def readData():
     f = open("C:\\xampp\\htdocs\\HaiZuka\\data.txt",'r',encoding = 'utf-8')
     str = f.read()
     data = str.split("\n")
     for i in range(len(data)):
         data[i] = (data[i]).split(" @#@ ")
     f.close()
+    return data
+
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--path', help='Path of the video you want to test on.', default=0)
     args = parser.parse_args()
@@ -89,6 +91,7 @@ def main():
             cap = cv2.VideoCapture(VIDEO_PATH)
 
             while (True):
+                data = readData()
                 # Doc tung frame
                 ret, frame = cap.read()
 
@@ -136,26 +139,18 @@ def main():
                             # Neu ty le nhan dang > 0.7 thi hien thi ten
                             if best_class_probabilities > 0.7:
                                 name = class_names[best_class_indices[0]]
-                                cv2.putText(frame, name, (text_x, text_y), cv2.FONT_HERSHEY_COMPLEX_SMALL,
-                                    1, (255, 255, 255), thickness=1, lineType=2)
-                                # converInt(name)
-                                # if B[A.index(name)] > 3:
                                 indexData = -1
                                 for i in range(0, len(data)):
                                     if name == data[i][0]:
                                         indexData = i
-                                # conf = ctypes.windll.user32.MessageBoxW(0, "Ma SV: " + data[indexData][0]
-                                # + "\n" + "Ho Ten: " + data[indexData][1]
-                                # + "\n" + "Lop: " + data[indexData][2], "Confirm", 3)
-                                # if conf == 6:
                                 if indexData != -1:
+                                    cv2.putText(frame, name + " " + data[indexData][1], (text_x, text_y), cv2.FONT_HERSHEY_COMPLEX_SMALL,
+                                    1, (255, 255, 255), thickness=1, lineType=2)
                                     data[indexData][3] = '1'
                                     writeData(data)
-                                    print("Done")
-
-                                        
                             else:
-                                name = "Unknown"
+                                cv2.putText(frame, "Unknown", (text_x, text_y), cv2.FONT_HERSHEY_COMPLEX_SMALL,
+                                    1, (255, 255, 255), thickness=1, lineType=2)
                                 
                             # Viet text len tren frame    
                             
@@ -168,7 +163,7 @@ def main():
 
                 # Hien thi frame len man hinh
                 cv2.imshow('Face Recognition', frame)
-                if cv2.waitKey(1) & 0xFF == ord('q') or kt == False:
+                if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
 
             cap.release()
