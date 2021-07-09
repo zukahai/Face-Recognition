@@ -1,4 +1,4 @@
 18IT319 @#@ Phan Duc Hai @#@ 18IT5 @#@ 0
-18IT324 @#@ Phan Duc Hai @#@ 18IT5 @#@ 0
-18IT234 @#@ Phan Duc Hai @#@ 18IT5 @#@ 0
+18IT324 @#@ Phan Duc Hai @#@ 18IT5 @#@ 1
+18IT234 @#@ Phan Duc Hai @#@ 18IT5 @#@ 1
 18IT994 @#@ Phan Duc Hai @#@ 18IT5 @#@ 0

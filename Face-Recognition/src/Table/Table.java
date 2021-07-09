@@ -51,9 +51,9 @@ public class Table extends JFrame implements MouseListener{
 		vT.clear();
 		vD.clear();
 		vT.add("Số thứ tự");
-		vT.add("Mã sinh viên");
+		vT.add("Công nhân");
 		vT.add("Họ và tên");
-		vT.add("Lớp");
+		vT.add("Đơn vị");
 		vT.add("Trạng thái");
 		int N = 0;
 			
@@ -116,10 +116,10 @@ public class Table extends JFrame implements MouseListener{
 			public void actionPerformed(ActionEvent e) {
 				readData();
 				if (count-- > 0) {
-					lb[0].setText("Sinh Viên Vừa Điểm Danh");
-					lb[1].setText("Mã SV: " + infoSV[0]);
+					lb[0].setText("Công Nhân Vừa Chấm Công");
+					lb[1].setText("Mã Công Nhân: " + infoSV[0]);
 					lb[2].setText("Họ và tên: " + infoSV[1]);
-					lb[3].setText("Lớp: " + infoSV[2]);
+					lb[3].setText("Đơn Vị: " + infoSV[2]);
 				} else {
 					for (int i = 0; i < lb.length; i++)
 						lb[i].setText("");
@@ -155,7 +155,8 @@ public class Table extends JFrame implements MouseListener{
 						if (i == s.length - 1) {
 							if (Integer.parseInt(s[s.length - 1]) == 1) 
 								vo.add("Có mặt");
-							vo.add("Vắng");
+							else
+								vo.add("Vắng");
 						} else
 							vo.add(s[i]);
 						data[row][i + 1] = s[i];
